@@ -1,0 +1,19 @@
+rules:
+  - id: python-eval-use
+    patterns:
+      - pattern: eval($X)
+    message: "Use of eval() can lead to code injection vulnerabilities."
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: security
+      severity: HIGH
+
+  - id: subprocess-shell-true
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+    message: "Avoid shell=True in subprocess calls to prevent command injection."
+    severity: ERROR
+    languages: [python]
+    metadata:
+      category: security
+      severity: CRITICAL
