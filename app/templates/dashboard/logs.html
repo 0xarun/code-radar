@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Logs</title>
+</head>
+<body class="bg-gray-100">
+<div class="max-w-6xl mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4">Application Logs</h1>
+  <form class="mb-4 flex gap-2" method="get">
+    <input class="border p-2" name="level" placeholder="LEVEL" value="{{ level }}" />
+    <input class="border p-2" name="job_id" placeholder="JOB ID" value="{{ job_id }}" />
+    <button class="bg-blue-600 text-white px-4 rounded">Filter</button>
+  </form>
+  <div class="bg-white p-3 rounded shadow h-[600px] overflow-auto text-xs font-mono whitespace-pre-wrap">
+  {% for line in lines %}{{ line }}
+{% endfor %}
+  </div>
+  {% if debug %}<div class="mt-4 text-xs text-orange-600">Verbose debug visibility enabled.</div>{% endif %}
+</div>
+</body>
+</html>

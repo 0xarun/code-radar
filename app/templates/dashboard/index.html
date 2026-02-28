@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Code Radar AI Dashboard</title>
+</head>
+<body class="bg-gray-100">
+<div class="max-w-6xl mx-auto py-8">
+  <h1 class="text-3xl font-bold mb-6">Code Radar AI Dashboard</h1>
+  <div class="grid grid-cols-4 gap-4 mb-6">
+    {% for key, value in health.items() %}
+    <div class="bg-white p-4 rounded shadow"><p class="text-gray-500">{{ key }}</p><p class="font-bold {% if value == 'ok' %}text-green-600{% else %}text-red-600{% endif %}">{{ value }}</p></div>
+    {% endfor %}
+  </div>
+  <div class="grid grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">Total jobs: <b>{{ metrics.total_jobs }}</b></div>
+    <div class="bg-white p-4 rounded shadow">Total findings: <b>{{ metrics.total_findings }}</b></div>
+    <div class="bg-white p-4 rounded shadow">Cache hit rate: <b>{{ metrics.cache_hit_rate }}%</b></div>
+    <div class="bg-white p-4 rounded shadow">Avg LLM time: <b>{{ metrics.avg_llm_time }}s</b></div>
+  </div>
+  <div class="grid grid-cols-2 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">DB size: <b>{{ storage.db_size }}</b></div>
+    <div class="bg-white p-4 rounded shadow">Redis memory: <b>{{ storage.redis_memory }}</b></div>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="font-bold mb-3">Recent Jobs</h2>
+    <table class="w-full text-sm">
+      <thead><tr class="text-left"><th>ID</th><th>Status</th><th>Findings</th><th>Duration</th></tr></thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr class="border-t"><td>{{ job.id }}</td><td>{{ job.status.value }}</td><td>{{ job.total_findings }}</td><td>{{ job.duration or '-' }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if debug %}<div class="mt-4 text-xs text-orange-600">DEBUG MODE ENABLED</div>{% endif %}
+  <a class="text-blue-600 mt-4 inline-block" href="/dashboard/logs">View logs</a>
+</div>
+</body>
+</html>
